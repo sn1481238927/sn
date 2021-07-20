@@ -1,0 +1,133 @@
+<!doctype html>
+<html  class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>麒麟运营方管理系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+    <script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script type="text/javascript" src="./js/urlAdress.js"></script>
+    <style type="text/css">
+        .login-infos{
+            position: absolute;
+            color: #fff;
+            top:16%;
+            left: 50%;
+            margin-left: -227px;
+        }
+        .login-title{
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .login-title img{
+            width: 70px;
+        }
+        .login-title span{
+            margin-left: 15px;
+            letter-spacing:4px;
+            text-shadow: 0.1em 0.1em 0.2em #013667;
+        }
+        .login-content{
+            background: #fff;
+            position: absolute;
+            top:160%;
+            border-radius: 4px;
+            padding: 0 60px;
+            left: 50%;
+            margin-left: -208px;
+        }
+        .login-content-title{
+            color: #627bdf;
+            font-size: 20px;
+            letter-spacing:4px;
+            margin: 30px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .login-all{
+            border: 1px solid #a0aaf2;
+            border-radius: 4px;
+            padding: 5px 15px 4px;
+        }
+        .login-all span,
+        .login-all img,
+        .login-all input{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .login-all span{
+            background: #a0aaf2;
+            width: 1px;
+            height: 18px;
+            margin: 0 10px;
+        }
+        .login-all input{
+            border: none;
+            font-size: 16px;
+            margin-left: 5px;
+            width: 200px;
+        }
+        .login-password{
+            margin:30px 0;
+        }
+        .login-btn button{
+            width: 100%;
+            color: #fff;
+            background: #6177ef;
+            font-size: 18px;
+            padding: 6px 0;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body style="height: 100%;">
+    <img src="./images/bg.jpg" alt="" style="width: 100%;height: 100%;">
+    <div class="login-infos">
+        <div class="login-title">
+            <img src="./images/logo.png" alt="">
+            <span>麒麟会员后台管理系统</span>
+        </div>
+<!--        <form action="./user/login">-->
+            <form th:action="@{/user/login}">
+        <div class="login-content">
+            <div class="login-content-title">用户登录</div>
+            <p style="color: #ff0000" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+            <div class="login-content-input">
+                <div class="login-all">
+                    <img src="./images/user.png" alt="">
+                    <span></span>
+                    <input name="username" type="text" placeholder="请输入用户名">
+                </div>
+                <div class="login-all login-password">
+                    <img src="./images/password.png" alt="">
+                    <span></span>
+                    <input name="password" type="password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="login-btn">
+                <button id="loginBtn">登录</button>
+            </div>
+        </div>
+        </form>
+    </div> 
+
+
+    <script>
+    // console.log(urlAuth);
+        
+
+    </script>
+    <!-- 底部结束 -->   
+</body>
+</html>

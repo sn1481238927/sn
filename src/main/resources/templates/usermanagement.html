@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+	<script type="text/javascript" src="../js/cookie.js"></script>
+    <script type="text/javascript" src="../js/urlAdress.js"></script>
+    <script src="../js/formDate.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="/${res}/award/js/html5.min.js"></script>
+    <script src="/${res}/award/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../css/my_layui.css">
+    <style type="text/css">
+    .layui-table-cell .layui-form-checkbox[lay-skin=primary]{top: 5px;}
+    .x-nav{
+        background-color: #e6e6e6;
+    }
+    .openTable{
+            width:100%;
+        }
+        .left{
+            width:30%;
+            text-align:right;
+            padding:12px 0px;
+        }
+        .right{
+            width:67%;
+            text-align:left;
+            padding:12px 0px 12px 3%
+        }
+    </style>
+</head>
+<body>
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+          <a _href="#">用户管理</a>
+        </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+          <i class="iconfont" style="line-height:30px">&#xe6aa;</i></a>
+    </div> 
+    <div class="x-body">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so" id="searchForm">
+                用户姓名：
+                <input type="text" name="nickname" placeholder="关键字" autocomplete="off" class="layui-input">
+                手机号：
+                <input type="text" name="phone" placeholder="关键字" autocomplete="off" class="layui-input">
+                <button class="layui-btn" lay-submit="search" lay-filter="search">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </form>
+        </div>
+        <table class="layui-table x-admin" id="UserListTable" lay-filter="UserListTable">
+        </table>
+    </div> 
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="detail">查看详情</a>
+    </script>
+    
+<!--    <script>-->
+
+<!--       var token=localStorage.getItem("ifClick");-->
+<!--        console.log(urlAdress);-->
+<!--        layui.use(['table','form'], function(){-->
+<!--            var table = layui.table;-->
+<!--            var form = layui.form;-->
+<!--             // 监听条件搜索提交-->
+<!--            form.on('submit(search)', function(data){-->
+<!--                table.reload('UserListTable', {-->
+<!--                    page: {-->
+<!--                    curr: 1-->
+<!--                    },-->
+<!--                    where: {-->
+<!--                    uresName: data.field.nickname,-->
+<!--                    phone: data.field.phone-->
+<!--                    }-->
+<!--                });-->
+
+<!--                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。-->
+<!--            });-->
+<!--            table.render({-->
+<!--                elem: '#UserListTable'-->
+<!--                ,height: 'full'-->
+<!--                   ,url: urlAdress+"/membership/listCard" //数据接口-->
+<!--				   ,where:{membership:'1'}-->
+<!--                ,method: 'GET'-->
+<!--                ,headers: {-->
+<!--                    'Authorization':'bearer '+token-->
+<!--                    //'Authorization':'bearer 79106c2a-5921-4f1a-a8cf-3dc7ce60eb10'-->
+<!--                } -->
+<!--                // ,contentType: 'application/json'-->
+<!--                ,request: {-->
+<!--                    pageName: 'page',-->
+<!--                    limitName: 'limit',-->
+<!--                    uresName:' data.field.nickname',-->
+<!--                    phone:' data.field.phone',-->
+<!--                    membership:'1'-->
+<!--                }-->
+<!--				-->
+<!--                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增-->
+<!--                ,even : true //开启隔行背景-->
+<!--                ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档-->
+<!--                          layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局-->
+<!--                          //,curr: 1 //设定初始在第 1 页-->
+<!--                          ,groups: 5 //只显示 5 个连续页码-->
+<!--                          ,first: true //显示首页-->
+<!--                          ,last: true //显示尾页-->
+<!--                }-->
+<!--                // ,page: true-->
+<!--                ,limits : [5, 10, 15]-->
+<!--                ,limit: 5-->
+<!--                ,cols: [[ //表头-->
+<!--                    {field: 'data-id',hide: true, templet: function(d){-->
+<!--                        return d.id-->
+<!--                    }},-->
+<!--                    {field: 'id', title: '用户ID', sort: true, fixed: 'left',templet: function(d){-->
+<!--                        return d.id-->
+<!--                    }}-->
+<!--                    ,{field: 'nickname', title: '姓名',templet: function(d){-->
+<!--                        return d.sysUser.nickname-->
+<!--                    }}-->
+<!--                    ,{field: 'phone', title: '手机号',templet: function(d){-->
+<!--                        return d.sysUser.phone?d.sysUser.phone:'';-->
+<!--                    }} -->
+<!--                    ,{field: 'typeName', title: '会员类型',templet: function(d){-->
+<!--                        return d.membershipCardType?d.membershipCardType.typeName:'普通会员';-->
+<!--                    }}-->
+<!--                    ,{field: 'cardNum', title: '会员卡号',templet: function(d){-->
+<!--                        return d.cardNum?d.cardNum:'';-->
+<!--                    }}-->
+<!--                    ,{field: 'endingDate', title: '会员到期日',templet: function(d){-->
+<!--                        if(d.endingDate==null){-->
+<!--                            return '';-->
+<!--                        }else{-->
+<!--                        return formatDate2(d.endingDate);-->
+<!--                      }-->
+<!--                    }}-->
+<!--                    ,{field: 'beginDate', title: '创建时间',templet: function(d){-->
+<!--                        if(d.beginDate==null){-->
+<!--                            return '';-->
+<!--                        }else{-->
+<!--                        return formatDate1(d.beginDate);-->
+<!--                      }-->
+<!--                    }}-->
+<!--                    ,{field: 'idcard',hide: true, title: '身份证号',templet: function(d){-->
+<!--                        var shengri='';-->
+<!--                        if(d.title=null){-->
+<!--                            return d.title=shengri-->
+<!--                        }-->
+<!--                    }}-->
+<!--                    ,{field: 'birth', hide: true,title: '生日',templet: function(d){-->
+<!--                        var shengri='';-->
+<!--                        if(d.title=null){-->
+<!--                            return d.title=shengri-->
+<!--                        }-->
+<!--                    }}-->
+<!--                    ,{field: 'dan',hide: true, title: '单位',templet: function(d){-->
+<!--                        var shengri='';-->
+<!--                        if(d.title=null){-->
+<!--                            return shengri-->
+<!--                        }-->
+<!--                    }}-->
+<!--                    ,{field: 'adress',hide: true, title: '地址',templet: function(d){-->
+<!--                        var shengri='';-->
+<!--                        if(d.title=null){-->
+<!--                            return d.title=shengri-->
+<!--                        }-->
+<!--                    }}-->
+<!--                    ,{field: 'carnumber',hide: true, title: '车牌号',templet: function(d){-->
+<!--                        var shengri='';-->
+<!--                        if(d.title=null){-->
+<!--                            return d.title=shengri-->
+<!--                        }-->
+<!--                    }}-->
+<!--                    ,{fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo'}-->
+<!--                ]]-->
+<!--                // ,initSort: {-->
+<!--                //     field: 'id' 	//排序字段，对应 cols 设定的各字段名-->
+<!--                //     ,type: 'asc' 	//排序方式  asc: 升序、desc: 降序、null: 默认排序-->
+<!--                // }-->
+<!--                // ,response: {-->
+<!--                //     statusCode: 0 //重新规定成功的状态码为 200，table 组件默认为 0                       -->
+<!--                // }-->
+<!--                ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据-->
+<!--                    console.log(res);-->
+<!--                    return {-->
+<!--                        "code": res.code, //解析接口状态-->
+<!--                        "msg": res.msg, //解析提示文本-->
+<!--                        //"count": res.datasize, //解析数据长度-->
+<!--                        "data": res.data, //解析数据列表-->
+<!--                        'count':res.count  //数据总数-->
+<!--                    }-->
+<!--                },-->
+<!--                done: function (res, curr, count) {-->
+<!--                    table.on('tool(UserListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"-->
+<!--                        console.log(obj);-->
+<!--                        var d = obj.data; //获得当前行数据-->
+<!--                        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）-->
+<!--                        var tr = obj.tr; //获得当前行 tr 的DOM对象-->
+<!--                        if (layEvent == "detail"){-->
+<!--                            var ht="";-->
+<!--                                ht="<table class='openTable'>";-->
+<!--                                ht+="<tr><td class='left'>用户ID：</td><td class='right'>"+d.id+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>姓名：</td><td class='right'>"+d.sysUser.nickname +"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>手机号：</td><td class='right'>"+(d.sysUser.phone?d.sysUser.phone:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>会员类型：</td><td class='right'>"+(d.membershipCardType?d.membershipCardType.typeName:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>会员卡号：</td><td class='right'>"+(d.cardNum?d.cardNum:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>会员到期日：</td><td class='right'>"+(formatDate2(d.endingDate)) +"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>"+(d.title?d.card:'') +"</td><td class='right'>"+ (d.title?d.card:'') +"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>"+(d.title?d.card:'') +"</td><td class='right'>"+ (d.title?d.card:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>"+(d.title?d.card:'') +"</td><td class='right'>"+ (d.title?d.card:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>"+(d.title?d.card:'') +"</td><td class='right'>"+ (d.title?d.card:'')+"</td></tr>"-->
+<!--                                ht+="<tr><td class='left'>"+(d.title?d.card:'') +"</td><td class='right'>"+ (d.title?d.card:'')+"</td></tr>"-->
+<!--                                ht+="</table>"-->
+<!--                               layer.open({-->
+<!--                                   title:'会员卡类型详细信息',-->
+<!--                                   content: ht,-->
+<!--                                   area:[900,1200],-->
+<!--                                   btn:['关闭']-->
+<!--                               });-->
+<!--                        }else{-->
+<!--                            member_del(tr, data.id);-->
+<!--                        }-->
+<!--                   });-->
+<!--                },-->
+<!--                error:function(data) {-->
+<!--                    console.log(data);-->
+<!--                    if(data.resp_msg=='Invalid access token: d0ec8236-9614-4b06-9220-1454248f3936d'){-->
+<!--                        window.location.href='../pfIndex.html'-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--       -->
+<!--    layui.use(['form','jquery', 'table', 'layer'], function(){-->
+<!--        var $ = layui.jquery;-->
+<!--        var form = layui.form, table = layui.table, layer = layui.layer;-->
+<!--        //绑定搜素事件-->
+<!--        $("#searchBtn").click(function(){-->
+<!--            var nickname = $("#nickname").val();-->
+<!--            var phone = $("#phone").val();-->
+<!--            // var memberType = $("#userName").val();-->
+<!--            // var memberCard = $("#memberCard").val();-->
+<!--        })-->
+
+<!--        // 监听条件搜索提交-->
+<!--        form.on('submit(search)', function(data){-->
+<!--            table.reload('UserListTable', {-->
+<!--                page: {-->
+<!--                  curr: 1-->
+<!--                },-->
+<!--                where: {-->
+<!--                  uresName: data.field.nickname,-->
+<!--                  phone: data.field.phone-->
+<!--                }-->
+<!--            });-->
+
+<!--            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。-->
+<!--        });-->
+<!--        // //监听查看-->
+<!--        // table.on('tool(test)', function(obj){ -->
+<!--        // var data = form.data;-->
+<!--        // var layEvent = form.event; -->
+<!--        // var tr = form.tr; -->
+<!--        // if(layEvent === 'detail'){-->
+
+<!--        // }-->
+<!--        // });-->
+<!--    })-->
+<!--</script>-->
+</body>
+</html>

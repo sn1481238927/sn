@@ -1,0 +1,284 @@
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>客户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script type="text/javascript" src="../js/cookie.js"></script>
+    <script type="text/javascript" src="../js/urlAdress.js"></script>
+    <script src="../js/formDate.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="/${res}/award/js/html5.min.js"></script>
+    <script src="/${res}/award/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="../css/my_layui.css">
+    <style type="text/css">
+        .layui-table-cell .layui-form-checkbox[lay-skin=primary]{top: 5px;}
+        .x-nav{
+        background-color: #e6e6e6;
+    }
+    .openTable{
+            width:100%;
+        }
+        .left{
+            width:30%;
+            text-align:right;
+            padding:12px 0px;
+        }
+        .right{
+            width:67%;
+            text-align:left;
+            padding:12px 0px 12px 3%
+        }
+        </style>
+</head>
+<body>
+  <div class="x-nav">
+        <span class="layui-breadcrumb">
+          <a _href="#">客户管理</a>
+        </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+          <i class="iconfont" style="line-height:30px">&#xe6aa;</i></a>
+  </div>
+ 
+  </div>
+  <div class="x-body">
+      <div class="layui-row">
+          <form class="layui-form layui-col-md12 x-so" id="searchForm">
+              客户名称：
+              <input type="text" name="name" placeholder="关键字" autocomplete="off" class="layui-input">
+              客户来源：
+              <input type="text" name="username" placeholder="关键字" autocomplete="off" class="layui-input">
+              <button class="layui-btn" lay-submit="searchBtn" lay-filter="search">
+                  <i class="layui-icon">&#xe615;</i>查询
+          </form> 
+          <xblock>
+            <!-- [@scms_perm url="/awardSys/cooperatorAdd.jspx"] -->
+            <button class="layui-btn" onclick='x_admin_show("添加","./merchantAdd.html",800,600,"",1)'><i class="layui-icon"></i>添加</button>
+            <!-- [/@scms_perm] -->
+            <span class="x-right" style="line-height:40px"><!-- 共有数据：88 条 --></span>
+        </xblock>
+      </div>
+      <table class="layui-table x-admin" id="UnitListTable" lay-filter="UnitListTable"></table>
+  </div> 
+  <table lay-filter="demo">
+    <thead>
+      <tr>
+        <th lay-data="{field:'usern', width:100}">id</th>
+        <th lay-data="{field:'username', width:100}">客户名称</th>
+        <th lay-data="{field:'experience', width:80, sort:true}">客户来源</th>
+        <th lay-data="{field:'sign'}">客户所属行业</th>
+        <th lay-data="{field:'userne', width:100}">客户级别</th>
+        <th lay-data="{field:'expence', width:80, sort:true}">固定电话</th>
+        <th lay-data="{field:'sin'}">手机</th>
+        <th lay-data="{field:'sindf', toolbar: '#barDemo'}">操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+      <!-- <tr>
+        <td>1</td>
+        <td>小张</td>
+        <td>学校</td>
+        <td>电子商务</td>
+        <td>普通客户</td>
+        <td>010-1236895</td>
+        <td>15896324</td>
+      </tr> -->
+      <tr>
+        <td>1</td>
+        <td>小美</td>
+        <td>学校</td>
+        <td>电子商务</td>
+        <td>普通客户</td>
+        <td>010-78936895</td>
+        <td>11566329</td>
+      </tr>
+      <!-- <tr>
+        <td>2</td>
+        <td>小张</td>
+        <td>学校</td>
+        <td>电子商务</td>
+        <td>普通客户</td>
+        <td>010-3695595</td>
+        <td>18112692</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>啦啦啦</td>
+        <td>学校</td>
+        <td>啦啦啦啦</td>
+        <td>普通客户</td>
+        <td>123</td>
+        <td>123456</td>
+      </tr> -->
+    </tbody>
+  </table>
+<script type="text/html" id="barDemo">
+    <a title="编辑" lay-event="edit_btn" href="javascript:;">编辑<i class="layui-icon">&#xe642;</i></a>
+    <a title="删除" lay-event="del_btn" href="javascript:;">删除<i class="layui-icon">&#xe642;</i></a>
+</script>
+
+<script>
+    	layui.use(['table','jquery','form'], function(){
+          $ = layui.jquery;
+          var table = layui.table,layer = layui.layer;
+          var form = layui.form;
+          
+ 
+ //转换静态表格
+ table.init('demo', {
+   height: 315 //设置高度
+   ,limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+   //支持所有基础参数
+ });  
+})
+</script>
+<!-- <script>
+    // var token=localStorage.getItem("ifClick");
+	layui.use(['table','jquery','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,layer = layui.layer;
+        var form = layui.form;
+         
+		table.render({
+		    elem: '#UnitListTable'
+		    ,height: 'full'
+            ,url:'http://127.0.0.1:8088/customer/getOne' //数据接口
+            // ,where:{sortId:1}
+            ,method: 'GET'     
+		    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,even : true //开启隔行背景
+		    
+             ,page: false
+		    // ,limits : [5, 10, 15]
+            // ,limit: 5
+            ,cols: [[ //表头
+                {field: 'data-id',hide: true, templet: function(d){
+                    return d.id
+                }},
+                {field: 'customer_name', title: '客户名称', sort: true, fixed: 'left',templet: function(d){
+                    return d.customer_name
+                }},
+                {field: 'customer_origin', title: '客户来源', fixed: 'left',templet: function(d){
+                    return d.customer_origin
+                }}
+		        ,{field: 'customer_industry', title: '客户所属行业',templet: function(d){
+                    return d.customer_industry
+                }}
+                ,{field: 'uucustomer_level', title: '客户级别',templet: function(d){
+                    return d.ucustomer_level
+                }}
+                ,{field: 'customer_tel', title: '固定电话',templet: function(d){
+                    return d.customer_tel
+                }}  
+                ,{field: 'customer_phone', title: '手机',templet: function(d){
+                    return d.customer_phone
+                }}	
+                ,{fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo'}   
+            ]] 
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                    console.log(res);
+                    return {
+                        // "code": res.code, //解析接口状态
+                        // "msg": res.msg, //解析提示文本
+                        //"count": res.datasize, //解析数据长度
+                        "data": res.data, //解析数据列表
+                        // 'count':res.count  //数据总数
+                    }
+                },
+            done: function (res, curr, count) {
+              table.on('tool(UnitListTable)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    console.log(obj);
+                    var data= obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr; //获得当前行 tr 的DOM对象
+                    if (layEvent == "edit_btn"){
+                        x_admin_show('编辑','./merchantEidt.html?id='+data.id, 600, 400);                     
+                    }else{}
+              });
+            },
+            error:function(data) {
+                console.log(data);
+                if(data.resp_msg=='Invalid access token: '){
+                    window.location.href='../pfIndex.html'
+                }
+            }
+        });
+	});
+     /*用户-删除*/
+   function member_del(obj, id){
+        // var dataId={
+        //     id:id
+        // }
+            //  var dataId={
+            //      id: id
+            //  }
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.ajax({
+                type: "get",
+                async: false,
+                url: 'http://127.0.0.1:8088/coustomer/delete?id='+id,
+                // data: JSON.stringify(dataId),
+                contentType: 'application/json',
+                // headers: {
+                //     'Authorization':'bearer '+token
+                //     //'Authorization':'bearer 94211b05-c88c-44f9-b61a-dc1c57aeb9a9'
+                // }, 
+                dataType: 'json',
+                success: function(result) { 
+                    console.log(result);
+                    if(result.resp_code==0){
+                        layer.alert("删除成功", {icon: 6},function () {
+                            location.reload();
+                        });
+                    }else{                      
+                        layer.msg(result.message, {icon:1,time:1000}); 
+                    }
+                },
+                error:function(data) {
+                    console.log(data);
+                    if(data.resp_msg=='Invalid access token: '){
+                        window.location.href='../pfIndex.html'
+                    }
+                }
+            }); 
+        });
+    }     
+    layui.use(['form','jquery', 'table', 'layer'], function(){
+        var $ = layui.jquery;
+        var form = layui.form, table = layui.table, layer = layui.layer;
+        //绑定搜素事件
+        $("#searchBtn").click(function(){
+            var name = $("#customer_name").val();
+            var phone = $("#customer_phone").val();
+
+        })
+
+        // 监听条件搜索提交
+        form.on('submit(search)', function(data){
+            table.reload('UnitListTable', {
+                page: {
+                  curr: 1
+                },
+                where: {
+                  name: data.field.name,
+                  phone: data.field.customer_phone
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });    
+    })     
+    
+</script>  -->
+
+</body>
+</html>
