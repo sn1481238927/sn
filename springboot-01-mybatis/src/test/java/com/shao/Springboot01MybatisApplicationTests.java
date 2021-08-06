@@ -16,7 +16,7 @@ class Springboot01MybatisApplicationTests {
     @Test
     void contextLoads() throws SQLException {
         System.out.println(dataSource.getClass());
-//        System.out.println(dataSource.getConnection());
+        System.out.println(dataSource.getConnection());
     }
 
 }

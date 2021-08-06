@@ -1,6 +1,9 @@
 package com.shao.mapper;
 
-import com.shao.pojo.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.shao.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,15 +11,17 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface UserMapper {
-    List<User> queryUserList();
+public interface UserMapper extends BaseMapper<User> {
 
-    User queryUserById(int id);
-
-    int  addUser(User user);
-
-    int updateUser(User user);
-
-    int deleteUser(int id);
+//    IPage<User> selectPageVo(Page<?> page, Integer state);
+//    List<User> queryUserList();
+//
+//    User queryUserById(int id);
+//
+//    int  addUser(User user);
+//
+//    int updateUser(User user);
+//
+//    int deleteUser(int id);
 }
 
