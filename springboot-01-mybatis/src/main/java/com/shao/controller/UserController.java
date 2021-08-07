@@ -43,6 +43,28 @@ public class UserController {
         return  Result.success();
     }
 
+    @PostMapping("/login")
+    public Result<?> login(@RequestBody User user){
+        User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getName,user.getName()).eq(User::getPwd,user.getPwd()));
+        if(res==null){
+            return Result.error("-1","用户名或密码错误");
+        }
+        return  Result.success();
+    }
+
+    @PostMapping("/register")
+    public Result<?> register(@RequestBody User user){
+        User res=userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getName,user.getName()).eq(User::getPwd,user.getPwd()));
+        if(res!=null){
+            return Result.error("-1","用户名重复");
+        }
+        if(user.getPwd()==null){
+            user.setPwd("123456");
+        }
+        userMapper.insert(user);
+        return  Result.success();
+    }
+
     @GetMapping
     public Result<?> finePage(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,
