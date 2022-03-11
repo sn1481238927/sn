@@ -28,6 +28,7 @@
             <version>2.1.1</version>
         </dependency>
 
+<!--   Mybatis-plus启动配置-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
