@@ -27,9 +27,13 @@ public class SysUser extends BaseEntity
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
 
-    /** 部门ID */
-    @Excel(name = "部门编号", type = Type.IMPORT)
-    private Long deptId;
+    /** 地址 */
+    @Excel(name = "地址")
+    private String address;
+
+//    /** 部门ID */
+//    @Excel(name = "部门编号", type = Type.IMPORT)
+//    private Long deptId;
 
     /** 用户账号 */
     @Excel(name = "登录名称")
@@ -124,15 +128,15 @@ public class SysUser extends BaseEntity
         return userId != null && 1L == userId;
     }
 
-    public Long getDeptId()
-    {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId)
-    {
-        this.deptId = deptId;
-    }
+//    public Long getDeptId()
+//    {
+//        return deptId;
+//    }
+//
+//    public void setDeptId(Long deptId)
+//    {
+//        this.deptId = deptId;
+//    }
 
     @Xss(message = "用户昵称不能包含脚本字符")
     @Size(min = 0, max = 30, message = "用户昵称长度不能超过30个字符")
@@ -318,7 +322,7 @@ public class SysUser extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
-            .append("deptId", getDeptId())
+//            .append("deptId", getDeptId())
             .append("userName", getUserName())
             .append("nickName", getNickName())
             .append("email", getEmail())
