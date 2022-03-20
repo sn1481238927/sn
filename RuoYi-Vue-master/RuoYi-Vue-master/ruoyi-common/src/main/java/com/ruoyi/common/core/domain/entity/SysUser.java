@@ -28,6 +28,7 @@ public class SysUser extends BaseEntity
     private Long userId;
 
     /** 地址 */
+    @Excel(name = "地址")
     private String address;
 
     /** 部门ID */
@@ -84,6 +85,7 @@ public class SysUser extends BaseEntity
         @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
     })
     private SysDept dept;
+
 
     /** 角色对象 */
     private List<SysRole> roles;
@@ -205,6 +207,13 @@ public class SysUser extends BaseEntity
         this.avatar = avatar;
     }
 
+    public String getAddress() { return address; }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
     @JsonIgnore
     @JsonProperty
     public String getPassword()
@@ -225,13 +234,6 @@ public class SysUser extends BaseEntity
     public void setSalt(String salt)
     {
         this.salt = salt;
-    }
-
-    public String getAddress() { return address; }
-
-    public void setAddress(String address)
-    {
-        this.address = address;
     }
 
     public String getStatus()
@@ -329,7 +331,6 @@ public class SysUser extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
             .append("deptId", getDeptId())
-            .append("address",getAddress())
             .append("userName", getUserName())
             .append("nickName", getNickName())
             .append("email", getEmail())
@@ -347,6 +348,7 @@ public class SysUser extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("address",getAddress())
             .append("dept", getDept())
             .toString();
     }

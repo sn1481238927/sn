@@ -1,22 +1,18 @@
-package com.ruoyi.common.core.domain.entity;
+package com.ruoyi.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 物品对象 goods
  *
  * @author sn
  */
-public class SysGoods extends BaseEntity {
+public class SysGoodsVo extends BaseEntity {
 
     /** 物品ID */
     @Excel(name = "物品序号")
@@ -44,11 +40,11 @@ public class SysGoods extends BaseEntity {
 
     /** 类型 */
     @Excel(name = "类型")
-    private String goodstype;
+    private Integer goodstype;
 
     /** 状态 */
     @Excel(name = "状态")
-    private String status;
+    private Integer status;
 
     /** 发布人ID */
     @Excel(name = "发布人Id")
@@ -56,43 +52,11 @@ public class SysGoods extends BaseEntity {
 
     /** 发布时间 */
     @Excel(name = "发布时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     /** 结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date endtime;
-
-    /** 物品ID */
-    @Excel(name = "物品ID")
-    private Long goodsid;
-
-    private List<Message> messageList;
-
-
-    public SysGoods()
-    {
-
-    }
-
-    public List<Message> getMessageList() {
-        return messageList;
-    }
-
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
-    }
-
-    public Long getGoodsid()
-    {
-        return goodsid;
-    }
-
-    public void setGoodsid(Long goodsid)
-    {
-        this.goodsid = goodsid;
-    }
 
     public Long getId()
     {
@@ -151,22 +115,22 @@ public class SysGoods extends BaseEntity {
         this.address = address;
     }
 
-    public String getGoodstype()
+    public Integer getGoodstype()
     {
         return goodstype;
     }
 
-    public void setGoodstype(String goodstype)
+    public void setGoodstype(Integer goodstype)
     {
         this.goodstype = goodstype;
     }
 
-    public String getStatus()
+    public Integer getStatus()
     {
         return status;
     }
 
-    public void setStatus(String status)
+    public void setStatus(Integer status)
     {
         this.status = status;
     }
@@ -181,8 +145,6 @@ public class SysGoods extends BaseEntity {
         this.userId = userId;
     }
 
-    @JsonIgnore
-    @JsonProperty
     public Date getCreatetime()
     {
         return createtime;
@@ -216,8 +178,6 @@ public class SysGoods extends BaseEntity {
                 .append("nickeName", getNickName())
                 .append("address", getAddress())
                 .append("phonenumber", getPhonenumber())
-                .append("goodsid", getGoodsid())
-                .append("messageList", getMessageList())
                 .toString();
     }
 }

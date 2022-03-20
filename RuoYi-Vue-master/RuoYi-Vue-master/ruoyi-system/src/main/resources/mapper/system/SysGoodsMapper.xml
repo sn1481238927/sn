@@ -13,23 +13,38 @@
         <result property="createtime" column="createtime" />
         <result property="userId"   column="user_id"   />
         <result property="goodsdescribe" column="goodsdescribe" />
-        <result property="nickeName"  column="nicke_name"  />
+        <result property="nickName"  column="nick_name"  />
         <result property="address"   column="address"   />
         <result property="phonenumber" column="phonenumber" />
+        <result property="goodsid"   column="goodsid"   />
+
+        <collection property="messageList" ofType="com.ruoyi.common.core.domain.entity.Message">
+            <result property="newsId"   column="news_id"   />
+            <result property="content"  column="content"  />
+            <result property="parentId"   column="parent_id"   />
+            <result property="settime" column="settime" />
+            <result property="nickName"  column="nick_name"  />
+            <result property="goodsid"   column="goodsid"   />
+        </collection>
+
     </resultMap>
 
     <select id="selectSysGoodsList" parameterType="SysGoods" resultMap="SysGoodsResult">
       select * from goods g
-      left join system_user su on g.user_id = su.user_id
+      left join sys_user su on g.user_id = su.user_id
+      left join message m on m.goodsid  = g.id
         <where>
             <if test="userId != null and userId != 0">
                 AND g.user_id = #{userId}
             </if>
-            <if test="type != null and type != ''">
-                AND g.type = #{type}
+            <if test="goodsid != null and goodsid != 0">
+                AND g.id = #{goodsid}
             </if>
-            <if test="name != null and name != ''">
-                AND g.name like concat('%', #{name}, '%')
+            <if test="goodstype != null and goodstype != ''">
+                AND g.goodstype = #{goodstype}
+            </if>
+            <if test="goodsname != null and goodsname != ''">
+                AND g.goodsname like concat('%', #{goodsname}, '%')
             </if>
             <if test="status != null and status != ''">
                 AND g.status = #{status}
@@ -41,7 +56,6 @@
                 AND date_format(g.createime,'%y%m%d') &lt;= date_format(#{params.endtime},'%y%m%d')
             </if>
         </where>
-        order by dict_sort asc
     </select>
 
     <insert id="insertGoods" parameterType="SysGoods">

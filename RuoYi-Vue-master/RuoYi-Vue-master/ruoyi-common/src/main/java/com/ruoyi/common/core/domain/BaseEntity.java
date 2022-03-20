@@ -53,10 +53,7 @@ public class BaseEntity implements Serializable
         return createBy;
     }
 
-    public void setCreateBy(String createBy)
-    {
-        this.createBy = createBy;
-    }
+    public void setCreateBy(String createBy) { this.createBy = createBy; }
 
     public Date getCreateTime()
     {

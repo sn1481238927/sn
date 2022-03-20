@@ -26,6 +26,7 @@ public class SysGoodsController extends BaseController {
     @Autowired
     private ISysGoodsService sysGoodsService;
 
+
     /**
      * 获取物品列表
      */

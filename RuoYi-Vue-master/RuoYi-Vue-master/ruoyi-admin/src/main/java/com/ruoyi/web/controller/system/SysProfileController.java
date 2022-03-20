@@ -82,6 +82,7 @@ public class SysProfileController extends BaseController
             sysUser.setPhonenumber(user.getPhonenumber());
             sysUser.setEmail(user.getEmail());
             sysUser.setSex(user.getSex());
+            sysUser.setAddress(user.getAddress());
             tokenService.setLoginUser(loginUser);
             return AjaxResult.success();
         }

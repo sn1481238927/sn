@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MessageMapper">
+
+    <resultMap type="Message" id="MessageResult">
+        <id     property="newsId"   column="news_id"   />
+        <result property="content"  column="content"  />
+        <result property="parentId"   column="parent_id"   />
+        <result property="settime" column="settime" />
+        <result property="nickName"  column="nick_name"  />
+        <result property="goodsid"   column="goodsid"   />
+    </resultMap>
+
+    <select id="selectMessageList" parameterType="Message" resultMap="MessageResult">
+        select * from message m
+        left join goods g on g.id = m.goodsid
+        <where>
+            <if test="goodsid != null and goodsid != 0">
+                AND g.id = #{goodsid}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertMessage" parameterType="Message">
+        insert into message (
+        <if test="content != null and content != '' ">content, </if>
+        <if test="parentId != null and parentId != '' ">parent_id, </if>
+        <if test="settime != null and settime != '' ">settime, </if>
+        <if test="nickName != null and nickName != ''">nick_name,</if>
+        <if test="goodsid != null and goodsid != '' ">goodsid , </if>
+        createtime
+        )values(
+        <if test="content != null and content != ''">#{content}, </if>
+        <if test="parentId != null and parentId != ''">#{parentId}, </if>
+        <if test="settime != null and settime != ''">#{settime}, </if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
+        <if test="goodsid != null and goodsid != ''">#{goodsid},</if>
+        sysdate()
+        )
+    </insert>
+</mapper>

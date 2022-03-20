@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.core.domain.entity.SysGoods;
+import com.ruoyi.system.domain.SysGoodsVo;
+import com.ruoyi.system.mapper.MessageMapper;
 import com.ruoyi.system.mapper.SysGoodsMapper;
 import com.ruoyi.system.service.ISysGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class SysGoodsServiceImpl implements ISysGoodsService {
 
     @Autowired
     private SysGoodsMapper sysGoodsMapper;
+
+    @Autowired
+    private MessageMapper messageMapper;
 
     /**
      * 根据条件分页查询物品列表
